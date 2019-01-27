@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Track Rider</string>
+    <string name="tr_hint_username">Username</string>
+    <string name="tr_hint_password">Password</string>
 </resources>
