@@ -15,6 +15,7 @@
         android:orientation="vertical"
         android:padding="24dp">
 
+        //App Logo
         <ImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
@@ -23,6 +24,7 @@
             android:layout_marginTop="45dp"
             android:layout_marginBottom="16dp"/>
 
+        //App Name
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,14 +34,17 @@
             android:textAllCaps="true"
             android:layout_marginBottom="80dp"
             android:textColor="@color/colorAccent"/>
-        
+
+        //Username
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/tr_hint_username"
-            android:layout_margin="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
-            android:focusedByDefault="false">
+            android:focusedByDefault="false"
+            app:errorEnabled="true">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/et_username"
@@ -53,11 +58,13 @@
                 android:textColor="#ffffff"/>
         </android.support.design.widget.TextInputLayout>
 
+        //Password
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/tr_hint_password"
-            android:layout_margin="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             app:errorEnabled="true"
             app:passwordToggleEnabled="true"
             android:focusedByDefault="false">
@@ -72,6 +79,28 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"/>
         </android.support.design.widget.TextInputLayout>
+
+        //forgot password
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/tr_forgot_password"
+            android:textSize="14sp"
+            android:layout_gravity="center_horizontal"/>
+
+        //Login button
+        <android.support.design.button.MaterialButton
+            android:id="@+id/mb_login_page_login"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/tr_login"
+            android:textSize="16dp"
+            android:padding="10dp"/>
+
 
     </LinearLayout>
 

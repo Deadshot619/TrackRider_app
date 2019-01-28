@@ -2,4 +2,6 @@
     <string name="app_name">Track Rider</string>
     <string name="tr_hint_username">Username</string>
     <string name="tr_hint_password">Password</string>
+    <string name="tr_forgot_password">Forgot Password?</string>
+    <string name="tr_login">Login</string>
 </resources>
