@@ -82,6 +82,7 @@
 
         //forgot password
         <TextView
+            android:id="@+id/tv_forgot_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -93,7 +94,7 @@
         //Login button
         <android.support.design.button.MaterialButton
             android:id="@+id/mb_login_page_login"
-            android:layout_width="150dp"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_margin="25dp"
             android:layout_gravity="center_horizontal"
@@ -101,6 +102,14 @@
             android:textSize="16dp"
             android:padding="10dp"/>
 
+        //new user signin
+        <TextView
+            android:id="@+id/tv_signup_on_login_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/tr_new_user"
+            android:textSize="16sp"/>
 
     </LinearLayout>
 
