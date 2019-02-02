@@ -2,10 +2,13 @@
     <string name="app_name">Track Rider</string>
     <string name="tr_hint_username">Username</string>
     <string name="tr_hint_password">Password</string>
+    <string name="tr_hint_new_password">New Password</string>
+    <string name="tr_hint_confirm_new_password">Confirm New Password</string>
     <string name="tr_forgot_password">Forgot Password?</string>
     <string name="tr_login">Login</string>
     <string name="tr_new_user">New User? Sign up</string>
     <string name="tr_email">Email Address</string>
     <string name="tr_button_submit">Submit</string>
     <string name="tr_button_cancel">Cancel</string>
+    <string name="tr_enter_code">Enter Code</string>
 </resources>
