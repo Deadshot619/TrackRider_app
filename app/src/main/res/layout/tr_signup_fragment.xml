@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".LoginFragment"
-    android:background="@color/colorLoginPage">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipChildren="false"
-        android:clipToPadding="false"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="24dp">
 
@@ -42,12 +38,32 @@
             android:hint="@string/tr_hint_username"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:focusedByDefault="false"
             app:errorEnabled="true">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/et_username"
+                android:id="@+id/et_username_signup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textSize="20sp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"/>
+        </android.support.design.widget.TextInputLayout>
+
+
+        //Email
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/tr_email"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            app:errorEnabled="true"
+            android:layout_gravity="center_vertical">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/et_email_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
@@ -68,7 +84,7 @@
             app:passwordToggleEnabled="true">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/et_password"
+                android:id="@+id/et_password_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -78,37 +94,35 @@
                 android:paddingBottom="10dp"/>
         </android.support.design.widget.TextInputLayout>
 
-        //forgot password
-        <TextView
-            android:id="@+id/tv_forgot_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:text="@string/tr_forgot_password"
-            android:textSize="14sp"
-            android:layout_gravity="center_horizontal"/>
 
-        //Login button
-        <android.support.design.button.MaterialButton
-            android:id="@+id/mb_login_page_login"
-            android:layout_width="180dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/tr_login"
-            android:textSize="16dp"
-            android:padding="10dp"/>
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
-        //new user signin
-        <TextView
-            android:id="@+id/tv_signup_on_login_page"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/tr_new_user"
-            android:textSize="16sp"/>
+            //Submit
+            <android.support.design.button.MaterialButton
+                android:id="@+id/submit_button_signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:text="@string/tr_button_submit" />
+
+            //Cancel
+            <android.support.design.button.MaterialButton
+                android:id="@+id/btn_cancel_signup"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_toStartOf="@id/submit_button_signup"
+                android:layout_toLeftOf="@id/submit_button_signup"
+                android:text="@string/tr_button_cancel" />
+
+        </RelativeLayout>
 
     </LinearLayout>
-
 </ScrollView>

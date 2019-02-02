@@ -10,31 +10,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ForgotPasswordFragment_2 extends Fragment {
-
+public class SignUpFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //Inflate layout for this fragment
-        View view = inflater.inflate(R.layout.tr_forgot_password_fragment_2, container, false);
-        final TextInputEditText sentCode = view.findViewById(R.id.et_code);
-        final TextInputEditText newPassword = view.findViewById(R.id.et_new_password);
-        final TextInputEditText confirmPassword = view.findViewById(R.id.et_confirm_new_password);
+        View view = inflater.inflate(R.layout.tr_signup_fragment, container, false);
+        MaterialButton cancelButton = view.findViewById(R.id.btn_cancel_signup);
+        final TextInputEditText username = view.findViewById(R.id.et_username_signup);
+        final TextInputEditText email = view.findViewById(R.id.et_email_signup);
+        final TextInputEditText password = view.findViewById(R.id.et_password_signup);
 
-        MaterialButton cancelButton = view.findViewById(R.id.btn_cancel_forgot_pwd);
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sentCode.setText("");
-                newPassword.setText("");
-                confirmPassword.setText("");
+                username.setText("");
+                email.setText("");
+                password.setText("");
             }
         });
 
-
         return view;
-
     }
-
 }
