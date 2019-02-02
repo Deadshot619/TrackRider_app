@@ -5,4 +5,7 @@
     <string name="tr_forgot_password">Forgot Password?</string>
     <string name="tr_login">Login</string>
     <string name="tr_new_user">New User? Sign up</string>
+    <string name="tr_email">Email Address</string>
+    <string name="tr_button_submit">Submit</string>
+    <string name="tr_button_cancel">Cancel</string>
 </resources>
