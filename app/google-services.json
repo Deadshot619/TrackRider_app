@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "420038559892",
+    "firebase_url": "https://track-rider.firebaseio.com",
+    "project_id": "track-rider",
+    "storage_bucket": "track-rider.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:420038559892:android:d9f36b9c0e2636ca",
+        "android_client_info": {
+          "package_name": "com.trackrider.android.trackrider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "420038559892-tricsqoi7pqhdapna36q0je0ubfve0n4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trackrider.android.trackrider",
+            "certificate_hash": "d48948b4bbd70d42ec04deb22219a14e8ef70564"
+          }
+        },
+        {
+          "client_id": "420038559892-ccodl0s2hp0v4rfqtraeg1oa7bgl9ttg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwNF9pw3_Fz_4W4ZqurTfYHxdgfSPp-es"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "420038559892-ccodl0s2hp0v4rfqtraeg1oa7bgl9ttg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
