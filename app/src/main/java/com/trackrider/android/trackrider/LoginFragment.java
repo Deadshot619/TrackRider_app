@@ -21,6 +21,7 @@ public class LoginFragment extends Fragment {
         TextView forgotPasswordButton = view.findViewById(R.id.tv_forgot_password);
         TextView signupButton = view.findViewById(R.id.tv_signup_on_login_page);
 
+
         forgotPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
