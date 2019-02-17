@@ -58,11 +58,19 @@ public class LoginFragment extends Fragment {
         mGoogleButton = view.findViewById(R.id.google_sign_in_button);
         mAuth = FirebaseAuth.getInstance();
 
+        mGoogleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn();
+            }
+        });
+
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null){
-
+                    Toast.makeText(getActivity(), "Login", Toast.LENGTH_LONG).show();
+                    //startActivity(new Intent(getActivity(), TestActivity.class));
                 }
             }
         };
