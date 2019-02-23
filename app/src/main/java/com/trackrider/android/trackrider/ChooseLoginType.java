@@ -65,6 +65,7 @@ public class ChooseLoginType extends AppCompatActivity {
                 if (firebaseAuth.getCurrentUser() != null){
                     mProgressBar.setVisibility(View.INVISIBLE);
                     startActivity(new Intent(ChooseLoginType.this, TestActivity.class));
+                    finish();
                 }
             }
         };

@@ -35,6 +35,7 @@ public class TestActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null){
                     startActivity(new Intent(TestActivity.this, ChooseLoginType.class));
+                    finish();
                 }
             }
         };
