@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class ChooseLoginType extends AppCompatActivity {
     private final static int RC_SIGN_IN = 2;
     private GoogleSignInClient mGoogleSignInClient;
     FirebaseAuth.AuthStateListener mAuthListener;
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onStart() {
@@ -44,6 +46,7 @@ public class ChooseLoginType extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tr_choose_login_type);
 
+        mProgressBar = findViewById(R.id.progress_circular);
         mGoogleButton = findViewById(R.id.google_sign_in_button);
         mGoogleButton.setSize(SignInButton.SIZE_STANDARD);
         // Initialize Firebase Auth
@@ -60,6 +63,7 @@ public class ChooseLoginType extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null){
+                    mProgressBar.setVisibility(View.INVISIBLE);
                     startActivity(new Intent(ChooseLoginType.this, TestActivity.class));
                 }
             }
@@ -79,6 +83,7 @@ public class ChooseLoginType extends AppCompatActivity {
     }
 
     private void signIn() {
+        mProgressBar.setVisibility(View.VISIBLE);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
