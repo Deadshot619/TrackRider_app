@@ -15,4 +15,5 @@
     <string name="tr_log_out">Log Out</string>
 
     <string name="tr_create_room">Create Room</string>
+    <string name="tr_show_rooms">Show Rooms</string>
 </resources>
