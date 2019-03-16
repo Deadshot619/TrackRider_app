@@ -13,4 +13,6 @@
     <string name="tr_enter_code">Enter Code</string>
     <string name="tr_test_activity">Test Activity</string>
     <string name="tr_log_out">Log Out</string>
+
+    <string name="tr_create_room">Create Room</string>
 </resources>
