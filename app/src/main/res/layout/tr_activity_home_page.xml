@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="24dp"
     android:background="@color/backgroundColor"
-    android:theme="@style/ActionBarTheme"
     tools:context=".HomePageActivity">
 
     <!-- First Row -->
@@ -25,6 +24,8 @@
             android:layout_width="160dp"
             android:layout_height="190dp"
             android:layout_margin="10dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="8dp"
             android:focusable="true">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -36,7 +37,7 @@
                     android:layout_height="64dp"
                     android:background="@drawable/circlebackgroundgrey"
                     android:src="@drawable/ic_add_black_24dp"
-                    android:padding="10dp"/>
+                    android:padding="16dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -53,7 +54,10 @@
             android:clickable="true"
             android:layout_width="160dp"
             android:layout_height="190dp"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="8dp"
+            android:focusable="true">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -64,7 +68,7 @@
                     android:layout_height="64dp"
                     android:background="@drawable/circlebackgroundgrey"
                     android:src="@drawable/ic_visibility_black_24dp"
-                    android:padding="10dp"/>
+                    android:padding="16dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -90,7 +94,10 @@
             android:clickable="true"
             android:layout_width="160dp"
             android:layout_height="190dp"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="8dp"
+            android:focusable="true">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -101,7 +108,7 @@
                     android:layout_height="64dp"
                     android:background="@drawable/circlebackgroundgrey"
                     android:src="@drawable/ic_people_black_24dp"
-                    android:padding="10dp"/>
+                    android:padding="16dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -118,7 +125,10 @@
             android:clickable="true"
             android:layout_width="160dp"
             android:layout_height="190dp"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="8dp"
+            android:focusable="true">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -129,7 +139,7 @@
                     android:layout_height="64dp"
                     android:background="@drawable/circlebackgroundgrey"
                     android:src="@drawable/ic_history_black_24dp"
-                    android:padding="10dp"/>
+                    android:padding="16dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
