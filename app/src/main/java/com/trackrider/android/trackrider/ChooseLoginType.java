@@ -18,12 +18,21 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class ChooseLoginType extends AppCompatActivity {
 
@@ -33,6 +42,8 @@ public class ChooseLoginType extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressBar mProgressBar;
+    private DatabaseReference mDatabase;
+    private FirebaseFirestore db;
 
     @Override
     protected void onStart() {
@@ -49,8 +60,16 @@ public class ChooseLoginType extends AppCompatActivity {
         mProgressBar = findViewById(R.id.progress_circular);
         mGoogleButton = findViewById(R.id.google_sign_in_button);
         mGoogleButton.setSize(SignInButton.SIZE_STANDARD);
+
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
+        // Initialize firebase realtime database instance
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        //initialize firebase firestore instance
+        // Access a Cloud Firestore instance from your Activity
+        db = FirebaseFirestore.getInstance();
 
         mGoogleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +140,7 @@ public class ChooseLoginType extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("TAG", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            //updateUI(user);
+                            createNewUser(Objects.requireNonNull(user));
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("TAG", "signInWithCredential:failure", task.getException());
@@ -134,4 +153,27 @@ public class ChooseLoginType extends AppCompatActivity {
                 });
     }
 
+
+    private void createNewUser(FirebaseUser user){
+        // Create a new user with a first and last name
+        Map<String, Object> new_user = new HashMap<>();
+        new_user.put("Email_ID", Objects.requireNonNull(user.getEmail()));
+        //new_user.put("Friends", null);
+
+        db.collection("users")
+                .document(user.getEmail())
+                .set(new_user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getApplicationContext(), "User Created", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "User Creation Failed" + e , Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 }
