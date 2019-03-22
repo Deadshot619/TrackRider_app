@@ -1,21 +1,25 @@
 package com.trackrider.android.trackrider.utils;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class User {
+    private String uid;
     private String email_id;
     private List<String> friends;
+    private HashMap<String, User> acceptList;  //List user friends
     private int room_member;
     private int room_owner;
 
 
-    public User(){}
+    public User(){
 
-    public User(String email_id, List<String> friends, int room_member, int room_owner) {
+    }
+
+    public User(String uid, String email_id) {
+        this.uid = uid;
         this.email_id = email_id;
-        this.friends = friends;
-        this.room_member = room_member;
-        this.room_owner = room_owner;
+        acceptList = new HashMap<>();
     }
 
     public String getEmail_id() {
@@ -48,5 +52,21 @@ public class User {
 
     public void setRoom_owner(int room_owner) {
         this.room_owner = room_owner;
+    }
+
+    public HashMap<String, User> getAcceptList() {
+        return acceptList;
+    }
+
+    public void setAcceptList(HashMap<String, User> acceptList) {
+        this.acceptList = acceptList;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }
