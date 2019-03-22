@@ -55,7 +55,6 @@ public class ChooseLoginType extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         mAuth.addAuthStateListener(mAuthListener);
     }
 
@@ -159,7 +158,6 @@ public class ChooseLoginType extends AppCompatActivity {
                     }
                 });
     }
-
 
     private void createNewUser(final FirebaseUser user){
         // Create a new user with a first and last name
