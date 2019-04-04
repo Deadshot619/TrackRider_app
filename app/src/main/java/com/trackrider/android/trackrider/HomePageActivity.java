@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -21,7 +23,7 @@ public class HomePageActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
     private GoogleSignInClient mGoogleSignInClient;
-
+    CardView mFriends;
 
     //inflate menu bar with menu
     @Override
@@ -37,6 +39,7 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.tr_activity_home_page);
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN);
+        mFriends = findViewById(R.id.cv_friends);
 
 //        mAuthListener = new FirebaseAuth.AuthStateListener() {
 //            @Override
@@ -48,6 +51,13 @@ public class HomePageActivity extends AppCompatActivity {
 //                }
 //            }
 //        };
+
+        mFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomePageActivity.this, AllPeopleActivity.class));
+            }
+        });
     }
 
     //clicklistener on menus
