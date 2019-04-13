@@ -8,13 +8,14 @@
     tools:context=".AllPeopleActivity"
     android:orientation="vertical">
 
-    <android.support.v7.widget.SearchView
-        android:id="@+id/sv_search_all_people"
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        android:id="@+id/sv_material_search_all_people"
         app:queryHint="@string/tr_enter_email"
+        app:mt_maxSuggestionsCount="50"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </android.support.v7.widget.SearchView>
+    </com.mancj.materialsearchbar.MaterialSearchBar>
 
     <View
         android:layout_width="match_parent"
