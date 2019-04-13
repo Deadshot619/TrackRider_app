@@ -3,7 +3,6 @@ package com.trackrider.android.trackrider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
 
@@ -60,12 +59,17 @@ public class AllPeopleActivity extends AppCompatActivity {
         mSearchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
             @Override
             public void onSearchStateChanged(boolean enabled) {
-                
+                if (!enabled){
+                    if (adapter != null){
+                        //if close search, restore default
+                        recycler_all_user.setAdapter(adapter);
+                    }
+                }
             }
 
             @Override
             public void onSearchConfirmed(CharSequence text) {
-
+                startSearch(text.toString());
             }
 
             @Override
@@ -74,6 +78,10 @@ public class AllPeopleActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void startSearch(String toString) {
 
     }
 }
