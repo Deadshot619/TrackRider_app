@@ -52,6 +52,7 @@ public class HomePageActivity extends AppCompatActivity {
 //            }
 //        };
 
+
         mFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

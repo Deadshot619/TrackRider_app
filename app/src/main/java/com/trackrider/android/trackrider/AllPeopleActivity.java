@@ -176,6 +176,8 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
     protected void onStop() {
         if (adapter != null)
             adapter.stopListening();
+        if(searchAdapter != null)
+            searchAdapter.stopListening();
         super.onStop();
     }
 
@@ -184,10 +186,54 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
         super.onResume();
         if (adapter != null)
             adapter.startListening();
+        if (searchAdapter != null)
+            searchAdapter.startListening();
     }
 
-    private void startSearch(String toString) {
+    private void startSearch(String text_search) {
+        Query query = FirebaseDatabase.getInstance()
+                .getReference(Common.USER_INFORMATION)
+                .orderByChild("name")
+                .startAt(text_search);
 
+        FirebaseRecyclerOptions<User> options = new FirebaseRecyclerOptions.Builder<User>()
+                .setQuery(query, User.class)
+                .build();
+
+        searchAdapter = new FirebaseRecyclerAdapter<User, UserViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull User model) {
+                if (model.getEmail_id().equals(Common.loggedUser.getEmail_id())){
+                    holder.mUserEmail.setText(new StringBuilder(model.getEmail_id()).append(" (me) "));
+                    holder.mUserEmail.setTypeface(holder.mUserEmail.getTypeface(), Typeface.ITALIC);
+                }
+                else {
+                    holder.mUserEmail.setText(new StringBuilder(model.getEmail_id()));
+
+                }
+
+                //Event
+                holder.setiRecyclerItemClickListener(new IRecyclerItemClickListener() {
+                    @Override
+                    public void onItemClickListener(View view, int position) {
+                        //Implement late
+                    }
+                });
+            }
+
+            @NonNull
+            @Override
+            public UserViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                View itemView = LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.tr_layout_recycler_user, viewGroup, false);
+
+                return new UserViewHolder(itemView);
+            }
+        };
+
+        //to fill load user data
+        searchAdapter.startListening();
+        recycler_all_user.setAdapter(searchAdapter);
     }
 
     @Override
