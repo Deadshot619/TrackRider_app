@@ -145,7 +145,7 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
         recycler_all_user.setAdapter(adapter);
     }
 
-    /*@Override
+    @Override
     protected void onStop() {
         if (adapter != null)
             adapter.stopListening();
@@ -155,7 +155,9 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
     @Override
     protected void onResume() {
         super.onResume();
-    }*/
+        if (adapter != null)
+            adapter.startListening();
+    }
 
     private void startSearch(String toString) {
 
