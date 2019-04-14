@@ -10,7 +10,7 @@ import com.trackrider.android.trackrider.R;
 
 public class UserViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    TextView mUserEmail;
+    public TextView mUserEmail;
     IRecyclerItemClickListener iRecyclerItemClickListener;
 
     public void setiRecyclerItemClickListener(IRecyclerItemClickListener iRecyclerItemClickListener) {

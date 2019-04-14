@@ -1,5 +1,7 @@
 package com.trackrider.android.trackrider;
 
+import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -7,6 +9,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -14,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.trackrider.android.trackrider.Interface.IFirebaseLoadDone;
+import com.trackrider.android.trackrider.Interface.IRecyclerItemClickListener;
 import com.trackrider.android.trackrider.ViewHolder.UserViewHolder;
 import com.trackrider.android.trackrider.utils.Common;
 import com.trackrider.android.trackrider.utils.User;
@@ -99,8 +105,57 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
 
     private void loadUserList() {
         Query query = FirebaseDatabase.getInstance().getReference().child(Common.USER_INFORMATION);
-        //FirebaseRecyclerOptions<User> options = new
+        FirebaseRecyclerOptions<User> options = new FirebaseRecyclerOptions.Builder<User>()
+                .setQuery(query, User.class)
+                .build();
+
+        adapter = new FirebaseRecyclerAdapter<User, UserViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull User model) {
+                if (model.getEmail_id().equals(Common.loggedUser.getEmail_id())){
+                    holder.mUserEmail.setText(new StringBuilder(model.getEmail_id()).append(" (me) "));
+                    holder.mUserEmail.setTypeface(holder.mUserEmail.getTypeface(), Typeface.ITALIC);
+                }
+                else {
+                    holder.mUserEmail.setText(new StringBuilder(model.getEmail_id()));
+
+                }
+
+                //Event
+                holder.setiRecyclerItemClickListener(new IRecyclerItemClickListener() {
+                    @Override
+                    public void onItemClickListener(View view, int position) {
+                        //Implement late
+                    }
+                });
+            }
+
+            @NonNull
+            @Override
+            public UserViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                View itemView = LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.tr_layout_recycler_user, viewGroup, false);
+
+                return new UserViewHolder(itemView);
+            }
+        };
+
+        //to fill load user data
+        adapter.startListening();
+        recycler_all_user.setAdapter(adapter);
     }
+
+    /*@Override
+    protected void onStop() {
+        if (adapter != null)
+            adapter.stopListening();
+        super.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }*/
 
     private void startSearch(String toString) {
 
