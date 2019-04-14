@@ -15,8 +15,12 @@ import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.trackrider.android.trackrider.Interface.IFirebaseLoadDone;
 import com.trackrider.android.trackrider.Interface.IRecyclerItemClickListener;
@@ -99,7 +103,29 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
 
         firebaseLoadDone = this;
         loadUserList();
-        //loadSearchData();
+        loadSearchData();
+
+    }
+
+    private void loadSearchData() {
+        final List<String> listUserEmail = new ArrayList<>();
+        DatabaseReference userList = FirebaseDatabase.getInstance()
+                .getReference(Common.USER_INFORMATION);
+        userList.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapShot:dataSnapshot.getChildren()){
+                    User user = userSnapShot.getValue(User.class);
+                    listUserEmail.add(user.getEmail_id());
+                }
+                firebaseLoadDone.onFirebaseLoadUserNameDone(listUserEmail);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                firebaseLoadDone.onFirebaseLoadFailed(databaseError.getMessage());
+            }
+        });
 
     }
 
