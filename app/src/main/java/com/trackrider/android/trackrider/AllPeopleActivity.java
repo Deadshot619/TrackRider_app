@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -191,11 +192,11 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
 
     @Override
     public void onFirebaseLoadUserNameDone(List<String> lstEmail) {
-
+        mSearchBar.setLastSuggestions(lstEmail);
     }
 
     @Override
     public void onFirebaseLoadFailed(String message) {
-
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
