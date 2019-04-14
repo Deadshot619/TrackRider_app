@@ -19,7 +19,6 @@ public class UserViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     public UserViewHolder(@NonNull View itemView) {
         super(itemView);
-
         mUserEmail = itemView.findViewById(R.id.tv_user_email);
         itemView.setOnClickListener(this);
     }

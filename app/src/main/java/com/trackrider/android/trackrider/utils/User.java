@@ -12,14 +12,12 @@ public class User {
     private int room_owner;
 
 
-    public User(){
-
+    public String getUid() {
+        return uid;
     }
 
-    public User(String uid, String email_id) {
+    public void setUid(String uid) {
         this.uid = uid;
-        this.email_id = email_id;
-        acceptList = new HashMap<>();
     }
 
     public String getEmail_id() {
@@ -38,6 +36,14 @@ public class User {
         this.friends = friends;
     }
 
+    public HashMap<String, User> getAcceptList() {
+        return acceptList;
+    }
+
+    public void setAcceptList(HashMap<String, User> acceptList) {
+        this.acceptList = acceptList;
+    }
+
     public int getRoom_member() {
         return room_member;
     }
@@ -54,19 +60,15 @@ public class User {
         this.room_owner = room_owner;
     }
 
-    public HashMap<String, User> getAcceptList() {
-        return acceptList;
+
+    public User(){
+
     }
 
-    public void setAcceptList(HashMap<String, User> acceptList) {
-        this.acceptList = acceptList;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
+    public User(String uid, String email_id) {
         this.uid = uid;
+        this.email_id = email_id;
+        acceptList = new HashMap<>();
     }
+
 }
