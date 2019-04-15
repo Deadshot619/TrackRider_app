@@ -102,9 +102,10 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recycler_all_user.setLayoutManager(layoutManager);
         recycler_all_user.addItemDecoration(new DividerItemDecoration(this,
-                ((LinearLayoutManager) (layoutManager)).getOrientation()));
+                ((LinearLayoutManager) layoutManager).getOrientation()));
 
         firebaseLoadDone = this;
+
         loadUserList();
         loadSearchData();
 

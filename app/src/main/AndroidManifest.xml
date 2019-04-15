@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.trackrider.android.trackrider">
 
     <application
@@ -19,7 +20,8 @@
             android:name=".HomePageActivity"
             android:theme="@style/ActionBarTheme" />
 
-        <activity android:name=".ChooseLoginType">
+        <activity
+            android:name=".ChooseLoginType">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,6 +32,7 @@
         <activity
             android:name=".TestActivity"
             android:theme="@style/ActionBarTheme" />
+
     </application>
 
 </manifest>
