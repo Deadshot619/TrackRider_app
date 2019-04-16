@@ -1,7 +1,10 @@
 package com.trackrider.android.trackrider;
 
+import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -25,12 +28,22 @@ import com.google.firebase.database.ValueEventListener;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.trackrider.android.trackrider.Interface.IFirebaseLoadDone;
 import com.trackrider.android.trackrider.Interface.IRecyclerItemClickListener;
+import com.trackrider.android.trackrider.Remote.IFCMService;
 import com.trackrider.android.trackrider.ViewHolder.UserViewHolder;
 import com.trackrider.android.trackrider.utils.Common;
+import com.trackrider.android.trackrider.utils.MyResponse;
+import com.trackrider.android.trackrider.utils.Request;
 import com.trackrider.android.trackrider.utils.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoadDone {
 
@@ -42,10 +55,16 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
     MaterialSearchBar mSearchBar;
     List<String> mSuggestList = new ArrayList<>();
 
+    IFCMService ifcmService;
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tr_all_people);
+
+        //Init api
+        ifcmService = Common.getIFCMService();
 
         //Init view
         mSearchBar = findViewById(R.id.sv_material_search_all_people);
@@ -141,7 +160,7 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
 
         adapter = new FirebaseRecyclerAdapter<User, UserViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull User model) {
+            protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull final User model) {
                 if (model.getEmail_id().equals(Common.loggedUser.getEmail_id())){
                     holder.mUserEmail.setText(new StringBuilder(model.getEmail_id()).append(" (me) "));
                     holder.mUserEmail.setTypeface(holder.mUserEmail.getTypeface(), Typeface.ITALIC);
@@ -155,7 +174,7 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
                 holder.setiRecyclerItemClickListener(new IRecyclerItemClickListener() {
                     @Override
                     public void onItemClickListener(View view, int position) {
-                        //Implement late
+                        showDialogRequest(model);
                     }
                 });
             }
@@ -175,12 +194,111 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
         recycler_all_user.setAdapter(adapter);
     }
 
+    private void showDialogRequest(final User model) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this, R.style.MyRequestDialog);
+        alertDialog.setTitle("Request Friend");
+        alertDialog.setMessage("Do you want to send frend request to " + model.getEmail_id());
+        alertDialog.setIcon(R.drawable.ic_account_circle_black_24dp);
+
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alertDialog.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Add to accept list
+                DatabaseReference acceptList = FirebaseDatabase.getInstance()
+                        .getReference(Common.USER_INFORMATION)
+                        .child(Common.loggedUser.getUid())
+                        .child(Common.ACCEPT_LIST);
+
+                acceptList.orderByKey().equalTo(model.getUid())
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                //if not friends already
+                                if (dataSnapshot.getValue() == null)
+                                    sendFriendRequest(model);
+                                else
+                                    Toast
+                                    .makeText(AllPeopleActivity.this, "You and " + model.getEmail_id() + "are already Friends", Toast.LENGTH_SHORT)
+                                    .show();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+            }
+        });
+
+        //important line, do not forget
+        alertDialog.show();
+    }
+
+    private void sendFriendRequest(final User model) {
+        //Get token to send
+        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference(Common.TOKENS);
+
+        tokens.orderByKey().equalTo(model.getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue() == null)
+                            Toast.makeText(AllPeopleActivity.this, "Token Error", Toast.LENGTH_SHORT).show();
+                        else {
+                            //create request
+                            Request request = new Request();
+
+                            //Create data
+                            Map<String, String> dataSend = new HashMap<>();
+                            dataSend.put(Common.FROM_UID, Common.loggedUser.getUid());
+                            dataSend.put(Common.FROM_NAME, Common.loggedUser.getEmail_id());
+                            dataSend.put(Common.TO_UID, Common.loggedUser.getUid());
+                            dataSend.put(Common.TO_NAME, Common.loggedUser.getEmail_id());
+
+                            request.setTo(dataSnapshot.child(model.getUid()).getValue(String.class));
+                            request.setData(dataSend);
+
+                            //Send
+                            compositeDisposable.add(ifcmService.sendFriendRequestToUser(request)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Consumer<MyResponse>() {
+                                @Override
+                                public void accept(MyResponse myResponse) throws Exception {
+                                    if (myResponse.success == 1)
+                                        Toast.makeText(AllPeopleActivity.this, "Request Sent!", Toast.LENGTH_LONG).show();
+                                }
+                            }, new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Exception {
+                                    Toast.makeText(AllPeopleActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                        }));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
     @Override
     protected void onStop() {
         if (adapter != null)
             adapter.stopListening();
         if(searchAdapter != null)
             searchAdapter.stopListening();
+
+        compositeDisposable.clear();
         super.onStop();
     }
 
