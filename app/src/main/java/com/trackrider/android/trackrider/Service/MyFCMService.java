@@ -21,11 +21,14 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.trackrider.android.trackrider.R;
 import com.trackrider.android.trackrider.utils.Common;
 import com.trackrider.android.trackrider.utils.NotificationHelper;
+import com.trackrider.android.trackrider.utils.User;
 
 import java.util.Map;
 import java.util.Random;
 
 public class MyFCMService extends FirebaseMessagingService {
+
+
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -36,8 +39,23 @@ public class MyFCMService extends FirebaseMessagingService {
                 sendNotificationWithChannel(remoteMessage);
             else
                 sendNotification(remoteMessage);
-        }
 
+            addRequestToUserInformation(remoteMessage.getData());
+        }
+    }
+
+    private void addRequestToUserInformation(Map<String, String> data) {
+        //Pending request
+        DatabaseReference friend_request = FirebaseDatabase.getInstance()
+                .getReference(Common.USER_INFORMATION)
+                .child(data.get(Common.TO_UID))
+                .child(Common.FRIEND_REQUEST);
+
+        User user = new User();
+        user.setUid(data.get(Common.FROM_UID));
+        user.setEmail_id(data.get(Common.FROM_NAME));
+
+        friend_request.child(user.getUid()).setValue(user);
     }
 
     private void sendNotification(RemoteMessage remoteMessage) {
