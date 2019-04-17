@@ -202,7 +202,48 @@ public class FriendRequestActivity extends AppCompatActivity implements IFirebas
     }
 
     private void loadSearchData() {
+        Query query = FirebaseDatabase.getInstance().getReference().child(Common.USER_INFORMATION)
+                .child(Common.loggedUser.getUid())
+                .child(Common.FRIEND_REQUEST);
 
+        FirebaseRecyclerOptions<User> options = new FirebaseRecyclerOptions.Builder<User>()
+                .setQuery(query, User.class)
+                .build();
+
+        searchAdapter = new FirebaseRecyclerAdapter<User, FriendRequestViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull FriendRequestViewHolder holder, int position, @NonNull final User model) {
+                holder.mUserEmail.setText(model.getEmail_id());
+                holder.mImgBtnAccept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteFriendRequest(model, true);
+                        addToAcceptList(model);
+                        addUserToFriendContact(model);
+                    }
+                });
+
+                holder.mImgBtnDecline.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Delete friend request
+                        deleteFriendRequest(model, true);
+                    }
+                });
+
+            }
+
+            @NonNull
+            @Override
+            public FriendRequestViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                View itemView = LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.tr_layout_recycler_friend_request, viewGroup,false);
+                return null;
+            }
+        };
+
+        searchAdapter.startListening();
+        recycler_all_user.setAdapter(searchAdapter);
     }
 
     @Override
