@@ -13,7 +13,7 @@ import com.trackrider.android.trackrider.R;
 
 public class NotificationHelper extends ContextWrapper {
     private static final String EDMT_CHANNEL_ID = "com.trackrider.android.trackrider";
-    private static final String EDMT_CHANNEL_NAME = "Track Rider";
+    private static final String EDMT_CHANNEL_NAME = "TrackRider";
 
     private NotificationManager manager;
 

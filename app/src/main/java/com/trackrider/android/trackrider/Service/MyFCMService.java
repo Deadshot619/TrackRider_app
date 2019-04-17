@@ -58,7 +58,7 @@ public class MyFCMService extends FirebaseMessagingService {
     private void sendNotification(RemoteMessage remoteMessage) {
         Map<String, String> data = remoteMessage.getData();
         String title = "Friend Requests";
-        String content = "New friend requests from " + data.get(Common.FROM_NAME);
+        String content = "New Friend Request from " + data.get(Common.FROM_NAME);
 
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
@@ -77,7 +77,7 @@ public class MyFCMService extends FirebaseMessagingService {
     private void sendNotificationWithChannel(RemoteMessage remoteMessage) {
         Map<String, String> data = remoteMessage.getData();
         String title = "Friend Requests";
-        String content = "New friend requests from " + data.get(Common.FROM_NAME);
+        String content = "New Friend Request from " + data.get(Common.FROM_NAME);
 
         NotificationHelper helper;
         Notification.Builder builder;

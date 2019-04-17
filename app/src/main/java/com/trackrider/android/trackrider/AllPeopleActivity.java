@@ -259,14 +259,14 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
                             Map<String, String> dataSend = new HashMap<>();
                             dataSend.put(Common.FROM_UID, Common.loggedUser.getUid());
                             dataSend.put(Common.FROM_NAME, Common.loggedUser.getEmail_id());
-                            dataSend.put(Common.TO_UID, Common.loggedUser.getUid());
-                            dataSend.put(Common.TO_NAME, Common.loggedUser.getEmail_id());
+                            dataSend.put(Common.TO_UID, model.getUid());
+                            dataSend.put(Common.TO_NAME, model.getEmail_id());
 
                             request.setTo(dataSnapshot.child(model.getUid()).getValue(String.class));
                             request.setData(dataSend);
 
                             //Send
-                            compositeDisposable.add(ifcmService.sendFriendRequestToUser(request)
+                             compositeDisposable.add(ifcmService.sendFriendRequestToUser(request)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Consumer<MyResponse>() {
