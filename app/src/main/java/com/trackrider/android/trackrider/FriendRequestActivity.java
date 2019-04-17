@@ -159,15 +159,17 @@ public class FriendRequestActivity extends AppCompatActivity implements IFirebas
         recycler_all_user.setAdapter(adapter);
     }
     private void addUserToFriendContact(User model) {
+        //friend add user
         DatabaseReference acceptList = FirebaseDatabase.getInstance()
                 .getReference(Common.USER_INFORMATION)
                 .child(model.getUid())
                 .child(Common.ACCEPT_LIST);
 
-        acceptList.child(model.getUid()).setValue(model);
+        acceptList.child(model.getUid()).setValue(Common.loggedUser);
     }
 
     private void addToAcceptList(User model) {
+        //User add friend
         DatabaseReference acceptList = FirebaseDatabase.getInstance()
                 .getReference(Common.USER_INFORMATION)
                 .child(Common.loggedUser.getUid())
