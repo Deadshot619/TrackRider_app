@@ -130,7 +130,7 @@ public class FriendRequestActivity extends AppCompatActivity implements IFirebas
                 holder.mImgBtnAccept.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        deleteFriendRequest(model, true);
+                        deleteFriendRequest(model, false);
                         addToAcceptList(model);
                         addUserToFriendContact(model);
                     }
@@ -151,14 +151,13 @@ public class FriendRequestActivity extends AppCompatActivity implements IFirebas
             public FriendRequestViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
                 View itemView = LayoutInflater.from(viewGroup.getContext())
                         .inflate(R.layout.tr_layout_recycler_friend_request, viewGroup,false);
-                return null;
+                return new FriendRequestViewHolder(itemView);
             }
         };
 
         adapter.startListening();
         recycler_all_user.setAdapter(adapter);
     }
-
     private void addUserToFriendContact(User model) {
         DatabaseReference acceptList = FirebaseDatabase.getInstance()
                 .getReference(Common.USER_INFORMATION)
@@ -187,7 +186,8 @@ public class FriendRequestActivity extends AppCompatActivity implements IFirebas
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(FriendRequestActivity.this, "Remove!", Toast.LENGTH_SHORT).show();
+                        if (isShowMessage)
+                            Toast.makeText(FriendRequestActivity.this, "Remove!", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -217,7 +217,7 @@ public class FriendRequestActivity extends AppCompatActivity implements IFirebas
                 holder.mImgBtnAccept.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        deleteFriendRequest(model, true);
+                        deleteFriendRequest(model, false);
                         addToAcceptList(model);
                         addUserToFriendContact(model);
                     }
@@ -238,7 +238,7 @@ public class FriendRequestActivity extends AppCompatActivity implements IFirebas
             public FriendRequestViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
                 View itemView = LayoutInflater.from(viewGroup.getContext())
                         .inflate(R.layout.tr_layout_recycler_friend_request, viewGroup,false);
-                return null;
+                return new FriendRequestViewHolder(itemView);
             }
         };
 
