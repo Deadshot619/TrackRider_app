@@ -15,6 +15,7 @@ public class Common {
     public static final String FRIEND_REQUEST = "FriendRequests";
     public static final String PUBLIC_LOCATION = "PublicLocation";
     public static User loggedUser;
+    public static User trackingUser;
 
     public static IFCMService getIFCMService(){
         return RetrofitClient.getClient("https://fcm.googleapis.com/")

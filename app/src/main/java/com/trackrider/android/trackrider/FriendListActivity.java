@@ -166,13 +166,15 @@ public class FriendListActivity extends AppCompatActivity implements IFirebaseLo
 
         adapter = new FirebaseRecyclerAdapter<User, UserViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull User model) {
+            protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull final User model) {
                 holder.mUserEmail.setText(new StringBuilder(model.getEmail_id()));
 
                 holder.setiRecyclerItemClickListener(new IRecyclerItemClickListener() {
                     @Override
                     public void onItemClickListener(View view, int position) {
                         //Show tracking
+                        Common.trackingUser = model;
+                        startActivity(new Intent(FriendListActivity.this, TrackingActivity.class));
                     }
                 });
             }
@@ -248,13 +250,15 @@ public class FriendListActivity extends AppCompatActivity implements IFirebaseLo
 
         searchAdapter = new FirebaseRecyclerAdapter<User, UserViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull User model) {
+            protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull final User model) {
                 holder.mUserEmail.setText(new StringBuilder(model.getEmail_id()));
 
                 holder.setiRecyclerItemClickListener(new IRecyclerItemClickListener() {
                     @Override
                     public void onItemClickListener(View view, int position) {
                         //Show tracking
+                        Common.trackingUser = model;
+                        startActivity(new Intent(FriendListActivity.this, TrackingActivity.class));
                     }
                 });
             }
