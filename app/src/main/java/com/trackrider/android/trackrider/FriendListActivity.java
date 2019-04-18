@@ -24,9 +24,12 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.trackrider.android.trackrider.Interface.IFirebaseLoadDone;
 import com.trackrider.android.trackrider.Interface.IRecyclerItemClickListener;
@@ -122,10 +125,33 @@ public class FriendListActivity extends AppCompatActivity implements IFirebaseLo
         firebaseLoadDone = this;
 
         loadFriendList();
-        loadSerchData();
+        loadSearchData();
     }
 
-    private void loadSerchData() {
+    private void loadSearchData() {
+        final List<String> listUserEmail = new ArrayList<>();
+
+        DatabaseReference userList = FirebaseDatabase.getInstance()
+                .getReference(Common.USER_INFORMATION)
+                .child(Common.loggedUser.getUid())
+                .child(Common.ACCEPT_LIST);
+
+        userList.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapShot:dataSnapshot.getChildren()){
+                    User user = userSnapShot.getValue(User.class);
+                    listUserEmail.add(user.getEmail_id());
+                }
+                firebaseLoadDone.onFirebaseLoadUserNameDone(listUserEmail);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                firebaseLoadDone.onFirebaseLoadFailed(databaseError.getMessage());
+            }
+        });
+
     }
 
     private void loadFriendList() {
@@ -208,7 +234,42 @@ public class FriendListActivity extends AppCompatActivity implements IFirebaseLo
     }
 
 
-    private void startSearch(String toString) {
+    private void startSearch(String search_value) {
+        Query query = FirebaseDatabase.getInstance()
+                .getReference(Common.USER_INFORMATION)
+                .child(Common.loggedUser.getUid())
+                .child(Common.ACCEPT_LIST)
+                .orderByChild("name")
+                .startAt(search_value);
+
+        FirebaseRecyclerOptions<User> options = new FirebaseRecyclerOptions.Builder<User>()
+                .setQuery(query, User.class)
+                .build();
+
+        searchAdapter = new FirebaseRecyclerAdapter<User, UserViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull User model) {
+                holder.mUserEmail.setText(new StringBuilder(model.getEmail_id()));
+
+                holder.setiRecyclerItemClickListener(new IRecyclerItemClickListener() {
+                    @Override
+                    public void onItemClickListener(View view, int position) {
+                        //Show tracking
+                    }
+                });
+            }
+
+            @NonNull
+            @Override
+            public UserViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+                View itemView = LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.tr_layout_recycler_user, viewGroup, false);
+
+                return new UserViewHolder(itemView);
+            }
+        };
+        searchAdapter.startListening();
+        recycler_friend_list.setAdapter(searchAdapter);
     }
 
     @Override

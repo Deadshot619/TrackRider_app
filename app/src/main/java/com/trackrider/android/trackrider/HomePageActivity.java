@@ -41,6 +41,7 @@ public class HomePageActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN);
         mShowPeople = findViewById(R.id.cv_show_people);
         mShowRequest = findViewById(R.id.cv_show_request);
+        mFriends = findViewById(R.id.cv_friends);
 //        mAuthListener = new FirebaseAuth.AuthStateListener() {
 //            @Override
 //            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -63,6 +64,12 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomePageActivity.this, FriendRequestActivity.class));
+            }
+        });
+        mFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomePageActivity.this, FriendListActivity.class));
             }
         });
     }
