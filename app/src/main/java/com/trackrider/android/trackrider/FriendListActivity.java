@@ -51,7 +51,7 @@ public class FriendListActivity extends AppCompatActivity implements IFirebaseLo
     MaterialSearchBar mSearchBar;
     List<String> mSuggestList = new ArrayList<>();
 
-    DatabaseReference publicLocation;
+    //DatabaseReference publicLocation;
     LocationRequest locationRequest;
     FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -119,7 +119,7 @@ public class FriendListActivity extends AppCompatActivity implements IFirebaseLo
                 ((LinearLayoutManager) layoutManager).getOrientation()));
 
         //Update Location
-        publicLocation = FirebaseDatabase.getInstance().getReference(Common.PUBLIC_LOCATION);
+       // publicLocation = FirebaseDatabase.getInstance().getReference(Common.PUBLIC_LOCATION);
         updateLocation();
 
         firebaseLoadDone = this;
