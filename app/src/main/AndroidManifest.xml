@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FriendRequestActivity"></activity>
+        <activity android:name=".FriendListActivity"></activity>
+        <activity android:name=".FriendRequestActivity" />
 
         <service android:name=".Service.MyFCMService">
             <intent-filter>
