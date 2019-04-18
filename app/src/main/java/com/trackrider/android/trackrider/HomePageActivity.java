@@ -23,7 +23,7 @@ public class HomePageActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
     private GoogleSignInClient mGoogleSignInClient;
-    CardView mFriends;
+    CardView mFriends, mShowRequest, mShowPeople;
 
     //inflate menu bar with menu
     @Override
@@ -39,8 +39,8 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.tr_activity_home_page);
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN);
-        mFriends = findViewById(R.id.cv_friends);
-
+        mShowPeople = findViewById(R.id.cv_show_people);
+        mShowRequest = findViewById(R.id.cv_show_request);
 //        mAuthListener = new FirebaseAuth.AuthStateListener() {
 //            @Override
 //            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -53,10 +53,16 @@ public class HomePageActivity extends AppCompatActivity {
 //        };
 
 
-        mFriends.setOnClickListener(new View.OnClickListener() {
+        mShowPeople.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomePageActivity.this, AllPeopleActivity.class));
+            }
+        });
+        mShowRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomePageActivity.this, FriendRequestActivity.class));
             }
         });
     }
