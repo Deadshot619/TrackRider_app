@@ -3,6 +3,10 @@ package com.trackrider.android.trackrider.utils;
 import com.trackrider.android.trackrider.Remote.IFCMService;
 import com.trackrider.android.trackrider.Remote.RetrofitClient;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Common {
     public static final String USER_INFORMATION = "UserInformation";
     public static final String USER_UID_SAVE_KEY = "SaveUid";
@@ -22,4 +26,11 @@ public class Common {
                 .create(IFCMService.class);
     }
 
+    public static Date convertTimeStampToDate(long time) {
+        return new Date(new Timestamp(time).getTime());
+    }
+
+    public static String getDateFormatted(Date date) {
+        return new SimpleDateFormat("dd-MM-yyyy HH:mm").format(date).toString();
+    }
 }
