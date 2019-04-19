@@ -118,7 +118,7 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     private void updateUi() {
-        startActivity(new Intent(HomePageActivity.this, ChooseLoginType2Activity.class));
+        startActivity(new Intent(HomePageActivity.this, ChooseLoginType.class));
         Toast.makeText(getApplicationContext(), "User logout successful", Toast.LENGTH_LONG).show();
         finish();
     }

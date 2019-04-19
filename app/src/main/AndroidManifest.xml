@@ -53,9 +53,13 @@
         <receiver android:name=".Service.MyLocationReceiver"></receiver>
 
         <activity android:name=".ChooseLoginType2Activity">
+
+        </activity>
+
+        <activity android:name=".ChooseLoginType" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -70,7 +74,6 @@
             android:name=".HomePageActivity"
             android:theme="@style/ActionBarTheme" />
 
-        <activity android:name=".ChooseLoginType" />
         <activity
             android:name=".TestActivity"
             android:theme="@style/ActionBarTheme" />

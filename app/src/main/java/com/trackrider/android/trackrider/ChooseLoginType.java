@@ -41,16 +41,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import io.paperdb.Paper;
+
 public class ChooseLoginType extends AppCompatActivity {
 
     private SignInButton mGoogleButton;
     private FirebaseAuth mAuth;
     private final static int RC_SIGN_IN = 2;
+    private static final int MY_REQUEST_CODE = 7117;
     private GoogleSignInClient mGoogleSignInClient;
     FirebaseAuth.AuthStateListener mAuthListener;
     private ProgressBar mProgressBar;
-    private DatabaseReference mDatabase;
-    private FirebaseFirestore db;
+    private DatabaseReference user_information;
 
     @Override
     protected void onStart() {
@@ -63,19 +65,22 @@ public class ChooseLoginType extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tr_choose_login_type);
 
+
         mProgressBar = findViewById(R.id.progress_circular);
         mGoogleButton = findViewById(R.id.google_sign_in_button);
         mGoogleButton.setSize(SignInButton.SIZE_STANDARD);
+
+
+        Paper.init(this);
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
         // Initialize firebase realtime database instance
-        mDatabase = FirebaseDatabase.getInstance().getReference(Common.USER_INFORMATION);
+        user_information = FirebaseDatabase.getInstance().getReference(Common.USER_INFORMATION);
 
         //initialize firebase firestore instance
         // Access a Cloud Firestore instance from your Activity
-        db = FirebaseFirestore.getInstance();
 
         mGoogleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,49 +165,29 @@ public class ChooseLoginType extends AppCompatActivity {
     }
 
     private void createNewUser(final FirebaseUser user){
-        // Create a new user with a first and last name
-        Map<String, Object> new_user = new HashMap<>();
-        new_user.put("Email_ID", Objects.requireNonNull(user.getEmail()));
-        //new_user.put("Friends", null);
-
-        //firebase firestore
-        db.collection("users")
-                .document(user.getEmail())
-                .set(new_user)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(getApplicationContext(), "User Created", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "User Creation Failed" + e , Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        //firebase realtime database
-        mDatabase.orderByKey()
-                .equalTo(user.getUid())
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        //check if user exists on database
+        user_information.orderByKey()
+                .equalTo(firebaseUser.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(!(dataSnapshot.getValue() == null)) {  //if user does not exist
-                            if (!dataSnapshot.child(user.getUid()).exists()){  //if key uid does not exits
-                                Common.loggedUser = new User(user.getUid(), user.getEmail());
+                        //if user does not exists
+                        if (dataSnapshot.getValue() == null){
+                            //if key uid does not exists
+                            if (!dataSnapshot.child(firebaseUser.getUid()).exists()){
+                                Common.loggedUser = new User(firebaseUser.getUid(), firebaseUser.getEmail());
                                 //Add to database
-                                mDatabase.child((Common.loggedUser.getUid()))
+                                user_information.child(Common.loggedUser.getUid())
                                         .setValue(Common.loggedUser);
                             }
+                        }else{  //if user is available
+                            Common.loggedUser = dataSnapshot.child(firebaseUser.getUid()).getValue(User.class);
                         }
-                        else{  //if user is availbale
-                            Common.loggedUser = dataSnapshot.child(user.getUid()).getValue(User.class);
-                        }
-
-                        //save uid to storage to update from background
-                        //Paper.book().write(Common.USER_UID_SAVE_KEY, Common.loggedUser.getUid());
-                        updateToken(user);
+                        //Save UID to storage to update location from background
+                        Paper.book().write(Common.USER_UID_SAVE_KEY, Common.loggedUser.getUid());
+                        updateToken(firebaseUser);
+                        setupUI();
                     }
 
                     @Override
@@ -212,7 +197,13 @@ public class ChooseLoginType extends AppCompatActivity {
                 });
     }
 
-    private void updateToken(final FirebaseUser user) {
+    private void setupUI() {
+        //Navigate to home
+        startActivity(new Intent(ChooseLoginType.this, HomePageActivity.class));
+        finish();
+    }
+
+    private void updateToken(final FirebaseUser firebaseUser) {
         final DatabaseReference tokens = FirebaseDatabase.getInstance()
                 .getReference(Common.TOKENS);
 
@@ -221,15 +212,16 @@ public class ChooseLoginType extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
                     @Override
                     public void onSuccess(InstanceIdResult instanceIdResult) {
-                        tokens.child(user.getUid())
+                        tokens.child(firebaseUser.getUid())
                                 .setValue(instanceIdResult.getToken());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChooseLoginType.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+
     }
 }
