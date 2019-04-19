@@ -23,7 +23,7 @@ public class HomePageActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
     private GoogleSignInClient mGoogleSignInClient;
-    CardView mFriends, mShowRequest, mShowPeople;
+    CardView mCreateRoom, mShowRoom, mFriends, mHistory, mShowRequest, mShowPeople;
 
     //inflate menu bar with menu
     @Override
@@ -39,6 +39,10 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.tr_activity_home_page);
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN);
+
+        mCreateRoom = findViewById(R.id.cv_create_room);
+        mShowRoom = findViewById(R.id.cv_show_room);
+        mHistory = findViewById(R.id.cv_history);
         mShowPeople = findViewById(R.id.cv_show_people);
         mShowRequest = findViewById(R.id.cv_show_request);
         mFriends = findViewById(R.id.cv_friends);
@@ -54,6 +58,24 @@ public class HomePageActivity extends AppCompatActivity {
 //        };
 
 
+        mCreateRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HomePageActivity.this, "Feature Coming Soon!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mShowRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HomePageActivity.this, "Feature Coming Soon!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HomePageActivity.this, "Feature Coming Soon!", Toast.LENGTH_SHORT).show();
+            }
+        });
         mShowPeople.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

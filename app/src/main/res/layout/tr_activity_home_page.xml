@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <ScrollView
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -25,6 +23,7 @@
 
             <!-- Create Room -->
             <android.support.v7.widget.CardView
+                android:id="@+id/cv_create_room"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:layout_width="160dp"
@@ -56,6 +55,7 @@
 
             <!-- Show Room -->
             <android.support.v7.widget.CardView
+                android:id="@+id/cv_show_room"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:layout_width="160dp"
@@ -128,6 +128,7 @@
 
             <!-- History-->
             <android.support.v7.widget.CardView
+                android:id="@+id/cv_history"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:layout_width="160dp"
