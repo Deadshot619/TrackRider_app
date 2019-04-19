@@ -83,6 +83,8 @@ public class ChooseLoginType2Activity extends AppCompatActivity {
         startActivityForResult(AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
+                        .setLogo(R.drawable.tr_logo)
+                        .setTheme(R.style.SignInTheme)
                         .build()
                 ,MY_REQUEST_CODE);
     }

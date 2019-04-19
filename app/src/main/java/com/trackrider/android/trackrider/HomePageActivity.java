@@ -11,10 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -111,10 +113,24 @@ public class HomePageActivity extends AppCompatActivity {
 
     //Logs user out of app
     private void logout() {
-        mAuth = FirebaseAuth.getInstance();
+  /*      mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
         signOut();
         revokeAccess();
+*/
+        AuthUI.getInstance().signOut(HomePageActivity.this)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        startActivity(new Intent(HomePageActivity.this, ChooseLoginType2Activity.class));
+                        finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(HomePageActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void updateUi() {

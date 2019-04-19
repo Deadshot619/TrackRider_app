@@ -19,4 +19,9 @@
         <item name="colorPrimary">@android:color/black</item>
     </style>
 
+    <style name="SignInTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+    </style>
+
 </resources>
