@@ -33,8 +33,16 @@
         <activity
             android:name=".TrackingActivity"
             android:label="@string/title_activity_tracking"></activity>
-        <activity android:name=".FriendListActivity" />
-        <activity android:name=".FriendRequestActivity" />
+
+        <activity
+            android:label="@string/tr_friends"
+            android:name=".FriendListActivity"
+            android:theme="@style/ActionBarTheme"/>
+
+        <activity
+            android:label="@string/tr_requests"
+            android:name=".FriendRequestActivity"
+            android:theme="@style/ActionBarTheme"/>
 
         <service android:name=".Service.MyFCMService">
             <intent-filter>
@@ -51,12 +59,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
+            android:label="@string/tr_people"
             android:name=".AllPeopleActivity"
             android:theme="@style/ActionBarTheme" />
+
         <activity
+            android:label="@string/tr_home"
             android:name=".HomePageActivity"
             android:theme="@style/ActionBarTheme" />
+
         <activity android:name=".ChooseLoginType" />
         <activity
             android:name=".TestActivity"

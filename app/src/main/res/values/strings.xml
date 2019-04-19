@@ -14,12 +14,14 @@
     <string name="tr_test_activity">Test Activity</string>
     <string name="tr_log_out">Log Out</string>
 
+    <string name="tr_home">Home</string>
     <string name="tr_create_room">Create Room</string>
     <string name="tr_show_rooms">Show Rooms</string>
     <string name="tr_friends">Friends</string>
     <string name="tr_people">People</string>
     <string name="tr_show_request">Show Requests</string>
     <string name="tr_history">History</string>
+    <string name="tr_requests">Requests</string>
 
     <string name="tr_enter_email">Enter Email</string>
     <string name="tr_img_user_image">User Image</string>
