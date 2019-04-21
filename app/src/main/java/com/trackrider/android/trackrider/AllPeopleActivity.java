@@ -168,7 +168,6 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
                 }
                 else {
                     holder.mUserEmail.setText(new StringBuilder(model.getEmail_id()));
-
                 }
 
                 //Event
@@ -198,7 +197,7 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
     }
 
     private void showDialogRequest(final User model) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this, R.style.MyRequestDialog);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("Request Friend");
         alertDialog.setMessage("Do you want to send frend request to " + model.getEmail_id());
         alertDialog.setIcon(R.drawable.ic_account_circle_black_24dp);
@@ -242,8 +241,8 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
                                                     }
                                                     else
                                                         Toast
-                                                                .makeText(AllPeopleActivity.this, "You and " + model.getEmail_id() + "are already Friends", Toast.LENGTH_SHORT)
-                                                                .show();
+                                                        .makeText(AllPeopleActivity.this, "You and " + model.getEmail_id() + " are already Friends", Toast.LENGTH_SHORT)
+                                                        .show();
                                                 }
 
                                                 @Override

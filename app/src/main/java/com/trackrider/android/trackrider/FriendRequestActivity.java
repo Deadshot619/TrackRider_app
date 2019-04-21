@@ -234,7 +234,7 @@ public class FriendRequestActivity extends AppCompatActivity implements IFirebas
                     @Override
                     public void onSuccess(Void aVoid) {
                         if (isShowMessage)
-                            Toast.makeText(FriendRequestActivity.this, "Remove!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FriendRequestActivity.this, "Removed!", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
