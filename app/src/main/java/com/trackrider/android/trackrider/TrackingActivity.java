@@ -84,8 +84,10 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
         if (dataSnapshot.getValue() != null){
             MyLocation location = dataSnapshot.getValue(MyLocation.class);
 
-            //Add marker
             LatLng userMarker = new LatLng(location.getLatitude(), location.getLongitude());
+            //clear previous marker
+            mMap.clear();
+            //Add marker
             mMap.addMarker(new MarkerOptions().position(userMarker)
             .title(Common.trackingUser.getEmail_id())
             .snippet(Common.getDateFormatted(Common.convertTimeStampToDate(location.getTime()))));
