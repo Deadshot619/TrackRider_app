@@ -202,6 +202,7 @@ public class FriendRequestActivity extends AppCompatActivity implements IFirebas
         adapter.startListening();
         recycler_all_user.setAdapter(adapter);
     }
+
     private void addUserToFriendContact(User model) {
         //friend add user
         DatabaseReference acceptList = FirebaseDatabase.getInstance()

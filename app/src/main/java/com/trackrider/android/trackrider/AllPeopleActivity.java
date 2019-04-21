@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -211,22 +212,44 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //Add to accept list
-                DatabaseReference acceptList = FirebaseDatabase.getInstance()
+                final DatabaseReference acceptList = FirebaseDatabase.getInstance()
                         .getReference(Common.USER_INFORMATION)
                         .child(Common.loggedUser.getUid())
                         .child(Common.ACCEPT_LIST);
 
-                acceptList.orderByKey().equalTo(model.getUid())
+                DatabaseReference requestList = FirebaseDatabase.getInstance()
+                        .getReference(Common.USER_INFORMATION)
+                        .child(model.getUid())
+                        .child(Common.FRIEND_REQUEST);
+
+                requestList.orderByKey().equalTo(Common.loggedUser.getUid())
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                //if not friends already
-                                if (dataSnapshot.getValue() == null)
-                                    sendFriendRequest(model);
-                                else
-                                    Toast
-                                    .makeText(AllPeopleActivity.this, "You and " + model.getEmail_id() + "are already Friends", Toast.LENGTH_SHORT)
-                                    .show();
+                                //Check if friend request already sent
+                                if (dataSnapshot.exists())
+                                    Toast.makeText(AllPeopleActivity.this, "Friend request already sent!", Toast.LENGTH_SHORT).show();
+                                else {
+                                    acceptList.orderByKey().equalTo(model.getUid())
+                                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    //if not friends already
+                                                    if (dataSnapshot.getValue() == null){
+                                                        sendFriendRequest(model);
+                                                    }
+                                                    else
+                                                        Toast
+                                                                .makeText(AllPeopleActivity.this, "You and " + model.getEmail_id() + "are already Friends", Toast.LENGTH_SHORT)
+                                                                .show();
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                }
+                                            });
+                                }
                             }
 
                             @Override
@@ -234,6 +257,8 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
 
                             }
                         });
+
+
             }
         });
 
