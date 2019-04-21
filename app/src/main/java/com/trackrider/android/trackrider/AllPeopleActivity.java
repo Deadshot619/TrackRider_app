@@ -175,7 +175,9 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
                 holder.setiRecyclerItemClickListener(new IRecyclerItemClickListener() {
                     @Override
                     public void onItemClickListener(View view, int position) {
-                        showDialogRequest(model);
+                        //No dialog shown on click of user's username
+                        if (!model.getEmail_id().equals(Common.loggedUser.getEmail_id()))
+                            showDialogRequest(model);
                     }
                 });
             }
