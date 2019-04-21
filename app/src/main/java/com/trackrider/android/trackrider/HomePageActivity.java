@@ -17,8 +17,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.trackrider.android.trackrider.utils.Common;
+
+import io.paperdb.Paper;
 
 public class HomePageActivity extends AppCompatActivity {
 
@@ -118,6 +127,8 @@ public class HomePageActivity extends AppCompatActivity {
         signOut();
         revokeAccess();
 */
+
+        removeToken();
         AuthUI.getInstance().signOut(HomePageActivity.this)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -131,6 +142,28 @@ public class HomePageActivity extends AppCompatActivity {
                 Toast.makeText(HomePageActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void removeToken() {
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        final DatabaseReference tokens = FirebaseDatabase.getInstance()
+                .getReference(Common.TOKENS);
+        //Get Token & set its value to null
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+                    @Override
+                    public void onSuccess(InstanceIdResult instanceIdResult) {
+                        Paper.book().delete(Common.USER_UID_SAVE_KEY);
+                        tokens.child(firebaseUser.getUid())
+                                .setValue("");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(HomePageActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void updateUi() {

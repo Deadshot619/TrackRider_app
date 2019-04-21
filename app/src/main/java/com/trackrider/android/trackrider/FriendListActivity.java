@@ -183,7 +183,7 @@ public class FriendListActivity extends AppCompatActivity implements IFirebaseLo
             @Override
             public UserViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
                 View itemView = LayoutInflater.from(viewGroup.getContext())
-                        .inflate(R.layout.tr_layout_recycler_user, viewGroup, false);
+                        .inflate(R.layout.tr_layout_recycler_friends, viewGroup, false);
 
                 return new UserViewHolder(itemView);
             }
