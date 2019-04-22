@@ -8,4 +8,6 @@
 
     <color name="colorAccent">#6200EE</color>
     <color name="colorLoginPage">#ffffff</color>
+
+    <color name="colorLoginSubtext">#f3f3f3</color>
 </resources>

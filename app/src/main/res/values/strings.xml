@@ -26,4 +26,7 @@
     <string name="tr_enter_email">Enter Email</string>
     <string name="tr_img_user_image">User Image</string>
     <string name="title_activity_tracking">Map</string>
+
+    <string name="tr_subtext_1">Add, Track &amp; Ride with your</string>
+    <string name="tr_subtext_2">Riding Group</string>
 </resources>

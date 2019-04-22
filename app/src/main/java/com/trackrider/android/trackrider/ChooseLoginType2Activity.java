@@ -4,8 +4,10 @@ import android.Manifest;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.button.MaterialButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -41,6 +43,7 @@ public class ChooseLoginType2Activity extends AppCompatActivity {
     DatabaseReference user_information;
     private static final int MY_REQUEST_CODE = 7117;
     List<AuthUI.IdpConfig> providers;
+    MaterialButton mLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,8 @@ public class ChooseLoginType2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_tr_choose_login_type_2);
 
         Paper.init(this);
+
+        mLogin = findViewById(R.id.btn_login);
 
         //Init Firebase
         user_information = FirebaseDatabase.getInstance().getReference(Common.USER_INFORMATION);
@@ -63,7 +68,7 @@ public class ChooseLoginType2Activity extends AppCompatActivity {
                 .withListener(new PermissionListener() {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
-                        showSignInOptions();
+
                     }
 
                     @Override
@@ -76,6 +81,13 @@ public class ChooseLoginType2Activity extends AppCompatActivity {
 
                     }
                 }).check();
+
+        mLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSignInOptions();
+            }
+        });
 
     }
 

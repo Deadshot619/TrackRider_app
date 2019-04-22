@@ -1,6 +1,6 @@
 package com.trackrider.android.trackrider;
 
-import android.location.Location;
+
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
