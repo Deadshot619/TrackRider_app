@@ -16,8 +16,10 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -25,6 +27,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,6 +63,7 @@ public class FriendListActivity extends AppCompatActivity implements IFirebaseLo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tr_activity_friend_list);
+
 
         //Init view
         mSearchBar = findViewById(R.id.sv_material_search_all_people);
@@ -166,8 +170,36 @@ public class FriendListActivity extends AppCompatActivity implements IFirebaseLo
 
         adapter = new FirebaseRecyclerAdapter<User, UserViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull UserViewHolder holder, int position, @NonNull final User model) {
+            protected void onBindViewHolder(@NonNull final UserViewHolder holder, int position, @NonNull final User model) {
                 holder.mUserEmail.setText(new StringBuilder(model.getEmail_id()));
+
+                //setup Popup menu
+                holder.mMoreBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //creating a popup menu
+                        PopupMenu popup = new PopupMenu(FriendListActivity.this, holder.mMoreBtn);
+                        //inflating menu from xml resource
+                        popup.inflate(R.menu.menu_friend_list);
+                        //adding click listener
+                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.menu_remove_friend:
+                                        deleteFriendFromUser(model);
+                                        deleteUserFromFriend(model);
+                                        return true;
+                                    default:
+                                        return false;
+                                }
+                            }
+                        });
+                        //displaying the popup
+                        popup.show();
+
+                    }
+                });
 
                 holder.setiRecyclerItemClickListener(new IRecyclerItemClickListener() {
                     @Override
@@ -178,6 +210,7 @@ public class FriendListActivity extends AppCompatActivity implements IFirebaseLo
                         startActivity(new Intent(FriendListActivity.this, TrackingActivity.class));
                     }
                 });
+
             }
 
             @NonNull
@@ -193,6 +226,30 @@ public class FriendListActivity extends AppCompatActivity implements IFirebaseLo
         adapter.startListening();
         recycler_friend_list.setAdapter(adapter);
 
+    }
+
+    private void deleteUserFromFriend(final User model) {
+        DatabaseReference deleteFriend = FirebaseDatabase.getInstance()
+                .getReference(Common.USER_INFORMATION)
+                .child(model.getUid())
+                .child(Common.ACCEPT_LIST);
+
+        deleteFriend.child(Common.loggedUser.getUid()).removeValue()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(FriendListActivity.this, model.getEmail_id() + " removed as Friend", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void deleteFriendFromUser(User model) {
+        DatabaseReference deleteFriend = FirebaseDatabase.getInstance()
+                .getReference(Common.USER_INFORMATION)
+                .child(Common.loggedUser.getUid())
+                .child(Common.ACCEPT_LIST);
+
+        deleteFriend.child(model.getUid()).removeValue();
     }
 
     @Override
@@ -287,4 +344,5 @@ public class FriendListActivity extends AppCompatActivity implements IFirebaseLo
     public void onFirebaseLoadFailed(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
 }
