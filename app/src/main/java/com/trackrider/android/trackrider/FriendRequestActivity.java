@@ -210,7 +210,7 @@ public class FriendRequestActivity extends AppCompatActivity implements IFirebas
                 .child(model.getUid())
                 .child(Common.ACCEPT_LIST);
 
-        acceptList.child(model.getUid()).setValue(Common.loggedUser);
+        acceptList.child(Common.loggedUser.getUid()).setValue(Common.loggedUser);
     }
 
     private void addToAcceptList(User model) {

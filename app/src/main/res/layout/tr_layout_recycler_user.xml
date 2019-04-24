@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
+            //user image
             <ImageView
                 android:src="@drawable/ic_account_circle_black_24dp"
                 android:layout_width="40dp"
@@ -28,6 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+                    //user email id
                     <TextView
                         android:id="@+id/tv_user_email"
                         android:text="Email Here"

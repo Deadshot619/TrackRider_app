@@ -2,6 +2,7 @@ package com.trackrider.android.trackrider;
 
 import android.Manifest;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
@@ -54,7 +55,6 @@ public class FriendListActivity extends AppCompatActivity implements IFirebaseLo
     //DatabaseReference publicLocation;
     LocationRequest locationRequest;
     FusedLocationProviderClient fusedLocationProviderClient;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,6 +172,7 @@ public class FriendListActivity extends AppCompatActivity implements IFirebaseLo
                 holder.setiRecyclerItemClickListener(new IRecyclerItemClickListener() {
                     @Override
                     public void onItemClickListener(View view, int position) {
+
                         //Show tracking
                         Common.trackingUser = model;
                         startActivity(new Intent(FriendListActivity.this, TrackingActivity.class));
@@ -188,6 +189,7 @@ public class FriendListActivity extends AppCompatActivity implements IFirebaseLo
                 return new UserViewHolder(itemView);
             }
         };
+
         adapter.startListening();
         recycler_friend_list.setAdapter(adapter);
 

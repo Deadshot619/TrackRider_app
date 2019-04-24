@@ -11,7 +11,7 @@
     <com.mancj.materialsearchbar.MaterialSearchBar
         android:id="@+id/sv_material_search_all_people"
         app:mt_hint="@string/tr_enter_email"
-        app:mt_maxSuggestionsCount="50"
+        app:mt_maxSuggestionsCount="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

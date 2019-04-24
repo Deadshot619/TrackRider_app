@@ -218,6 +218,7 @@ public class AllPeopleActivity extends AppCompatActivity implements IFirebaseLoa
                         .child(Common.loggedUser.getUid())
                         .child(Common.ACCEPT_LIST);
 
+                //check request list of receiver user
                 DatabaseReference requestList = FirebaseDatabase.getInstance()
                         .getReference(Common.USER_INFORMATION)
                         .child(model.getUid())
