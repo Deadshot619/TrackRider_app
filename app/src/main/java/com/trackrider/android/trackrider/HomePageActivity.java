@@ -36,6 +36,7 @@ public class HomePageActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     CardView mCreateRoom, mShowRoom, mFriends, mHistory, mShowRequest, mShowPeople;
 
+
     //inflate menu bar with menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -133,10 +134,17 @@ public class HomePageActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        startActivity(new Intent(HomePageActivity.this, ChooseLoginType2Activity.class));
                         finish();
                     }
-                }).addOnFailureListener(new OnFailureListener() {
+                }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                deleteToken();
+                startActivity(new Intent(HomePageActivity.this, ChooseLoginType2Activity.class));
+                Toast.makeText(HomePageActivity.this, "Logged out Successfully", Toast.LENGTH_SHORT).show();
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(HomePageActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
